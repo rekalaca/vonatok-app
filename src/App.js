@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
 
 function App() {
+
+  const [trains, setTrains] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:4444/vonat")
+      .then((res) => res.json())
+      .then((data) => setTrains(data))
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container'>
+      <div className='row'>
+        <div className='col-12'>
+          <select className="form-select" aria-label="Default select example" defaultValue="">
+            {trains.map((train) => 
+              <option key={train.vId} value={train.vId}>
+                {train.vNev}
+              </option>
+            )}
+
+          </select>
+
+        </div>
+      </div>
     </div>
   );
 }
